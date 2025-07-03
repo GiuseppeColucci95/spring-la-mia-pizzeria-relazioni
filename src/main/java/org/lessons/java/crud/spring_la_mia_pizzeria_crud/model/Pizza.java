@@ -1,6 +1,7 @@
 package org.lessons.java.crud.spring_la_mia_pizzeria_crud.model;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
@@ -39,6 +41,10 @@ public class Pizza {
   @DecimalMin("1")
   private BigDecimal price;
 
+  // ! RELAZIONI ONE TO MANY
+  @OneToMany(mappedBy = "pizza")
+  private List<SpecialOffer> specialOffers;
+
   // ! GETTERS
   public Integer getId() {
     return id;
@@ -60,6 +66,10 @@ public class Pizza {
     return price;
   }
 
+  public List<SpecialOffer> getSpecialOffers() {
+    return specialOffers;
+  }
+
   // ! SETTERS
   public void setId(Integer id) {
     this.id = id;
@@ -79,5 +89,9 @@ public class Pizza {
 
   public void setPrice(BigDecimal price) {
     this.price = price;
+  }
+
+  public void setSpecialOffers(List<SpecialOffer> specialOffers) {
+    this.specialOffers = specialOffers;
   }
 }

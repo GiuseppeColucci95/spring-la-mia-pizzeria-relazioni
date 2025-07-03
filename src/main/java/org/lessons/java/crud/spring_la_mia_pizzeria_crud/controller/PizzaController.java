@@ -3,6 +3,7 @@ package org.lessons.java.crud.spring_la_mia_pizzeria_crud.controller;
 import java.util.List;
 
 import org.lessons.java.crud.spring_la_mia_pizzeria_crud.model.Pizza;
+import org.lessons.java.crud.spring_la_mia_pizzeria_crud.model.SpecialOffer;
 import org.lessons.java.crud.spring_la_mia_pizzeria_crud.repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -99,5 +100,16 @@ public class PizzaController {
     repository.deleteById(id);
 
     return "redirect:/pizzas";
+  }
+
+  @GetMapping("/{id}/discount")
+  public String specialOffer(@PathVariable Integer id, Model model) {
+
+    SpecialOffer offer = new SpecialOffer();
+    offer.setPizza(repository.findById(id).get());
+
+    model.addAttribute("specialOffer", offer);
+
+    return "/specialOffers/create-or-edit";
   }
 }
