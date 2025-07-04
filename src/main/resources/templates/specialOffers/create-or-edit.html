@@ -13,9 +13,11 @@
   <!-- HEADER -->
 
   <div class="container w-50 py-5">
-    <h1 class="text-center">Discounting "[[${specialOffer.pizza.name}]]"</h1>
+    <h1 th:if="${edit}" class="text-center">Editing "[[${specialOffer.pizza.name}]]" discount</h1>
+    <h1 th:unless="${edit}" class="text-center">Discounting "[[${specialOffer.pizza.name}]]"</h1>
 
-    <form th:action="@{/discounts/create}" method="post" th:object="${specialOffer}" class="mt-3">
+    <form th:action="${edit} ?@{/discounts/{id}/edit(id=*{id})} : @{/discounts/create}" method="post"
+      th:object="${specialOffer}" class="mt-3">
 
       <input type="hidden" th:field="*{pizza}" id="linked-pizza">
       <!-- pizza to hold (hidden) to save datas with submit -->

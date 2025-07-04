@@ -50,6 +50,7 @@
                   <h5 class="m-0">Price: [[*{price}]]€</h5>
                 </div>
                 <div class="d-flex align-items-center">
+                  <a th:href="@{/pizzas/{id}/discount(id=*{id})}" class="btn m-0 p-0">💰</a>
                   <a class="btn m-0 p-0" th:href="@{/pizzas/{id}(id=*{id})}">ℹ️</a>
                   <a class="text-decoration-none btn m-0 p-0" th:href="@{/pizzas/edit/{id}(id=*{id})}">✏</a>
                   <!-- <form th:action="@{/pizzas/delete/{id}(id=*{id})}" method="post">
