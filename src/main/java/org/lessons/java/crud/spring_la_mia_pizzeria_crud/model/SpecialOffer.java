@@ -9,6 +9,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -27,6 +28,7 @@ public class SpecialOffer {
   @FutureOrPresent(message = "End date cannot be in the past")
   private LocalDate endDate;
 
+  @NotBlank(message = "Offer title cannot be null or blank")
   private String title;
 
   // ! RELAZIONI MANY TO ONE
