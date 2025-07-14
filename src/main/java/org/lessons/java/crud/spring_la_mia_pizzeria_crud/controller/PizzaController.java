@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.lessons.java.crud.spring_la_mia_pizzeria_crud.model.Pizza;
 import org.lessons.java.crud.spring_la_mia_pizzeria_crud.model.SpecialOffer;
+import org.lessons.java.crud.spring_la_mia_pizzeria_crud.repository.IngredientRepository;
 import org.lessons.java.crud.spring_la_mia_pizzeria_crud.repository.PizzaRepository;
+import org.lessons.java.crud.spring_la_mia_pizzeria_crud.repository.SpecialOfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +26,12 @@ public class PizzaController {
 
   @Autowired
   private PizzaRepository repository;
+
+  @Autowired
+  private SpecialOfferRepository specialOfferRepository;
+
+  @Autowired
+  private IngredientRepository ingredientRepository;
 
   @GetMapping
   public String index(Model model) {
@@ -60,6 +68,7 @@ public class PizzaController {
   public String create(Model model) {
 
     model.addAttribute("pizza", new Pizza());
+    model.addAttribute("ingredients", ingredientRepository.findAll());
 
     return "pizzas/create";
   }
@@ -68,6 +77,7 @@ public class PizzaController {
   public String store(@Valid @ModelAttribute("pizza") Pizza pizzaForm, BindingResult bindingResult, Model model) {
 
     if (bindingResult.hasErrors()) {
+      model.addAttribute("ingredients", ingredientRepository.findAll());
       return "pizzas/create";
     }
 
@@ -79,6 +89,7 @@ public class PizzaController {
   public String edit(@PathVariable Integer id, Model model) {
 
     model.addAttribute("pizza", repository.findById(id).get());
+    model.addAttribute("ingredients", ingredientRepository.findAll());
 
     return "pizzas/edit";
   }
@@ -87,6 +98,7 @@ public class PizzaController {
   public String update(@Valid @ModelAttribute("pizza") Pizza pizzaForm, BindingResult bindingResult, Model model) {
 
     if (bindingResult.hasErrors()) {
+      model.addAttribute("ingredients", ingredientRepository.findAll());
       return "pizzas/edit";
     }
 
@@ -97,8 +109,13 @@ public class PizzaController {
   @PostMapping("/delete/{id}")
   public String delete(@PathVariable Integer id) {
 
-    repository.deleteById(id);
+    Pizza pizza = repository.findById(id).get();
 
+    for (SpecialOffer specialOfferToDelete : pizza.getSpecialOffers()) {
+      specialOfferRepository.delete(specialOfferToDelete);
+    }
+
+    repository.deleteById(id);
     return "redirect:/pizzas";
   }
 

@@ -31,7 +31,7 @@ public class SpecialOffer {
   @NotBlank(message = "Offer title cannot be null or blank")
   private String title;
 
-  // ! RELAZIONI MANY TO ONE
+  // ! MANY TO ONE RELATIONS
   @ManyToOne
   @JoinColumn(name = "pizza_id", nullable = false)
   private Pizza pizza;

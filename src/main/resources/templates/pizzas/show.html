@@ -44,6 +44,13 @@
       </ul>
       <!-- offers list -->
 
+      <h2 class="mt-5">Ingredients in this pizza</h2>
+      <ul class="list-unstyled">
+        <li th:each="ingredient : *{ingredients}" th:text="${ingredient.name}">
+        </li>
+      </ul>
+      <!-- ingredients list -->
+
     </section>
     <!-- offers section -->
 
